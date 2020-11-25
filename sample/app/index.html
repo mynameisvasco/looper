@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<body style="display:flex; margin: 0;">
+    <div style="display: flex; width:250px; background: rgba(255,255,255,0.5); height:100vh">
+
+    </div>
+    <div style="display: flex-col; flex: 1; background: white; padding: 10px">
+        <h1>
+            Hello
+        </h1>
+        <input name="name" value="" id="name" placeholder="Name">
+        <input name="password" type="password" value="" id="password" placeholder="Password">
+        <button onclick="onLoginFormSubmit()">
+            Login
+        </button>
+    </div>
+    <script src="looper.js"></script>
+    <script>
+        function onLoginFormSubmit(e) {
+            event.stopImmediatePropagation();
+            var name = document.getElementById("name").value;
+            var password = document.getElementById("password").value;
+            Looper.emitRequest("/auth/login", {
+                name,
+                password,
+                secret: "Aveiro"
+            });
+
+        }
+        Looper.onResponse("/auth/login", (data) => {
+            alert(data.content.message)
+        })
+    </script>
+</body>
+
+</html>
